@@ -1,0 +1,13 @@
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\CometX.Application.dll.config
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\CometX.Application.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\CometX.Application.pdb
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.Extended.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\Microsoft.ApplicationBlocks.Data.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.xml
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.Extended.xml
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\obj\Debug\CometX.Application.csprojResolveAssemblyReference.cache
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\obj\Debug\CometX.Application.dll
+C:\Users\crangel\Documents\Visual Studio 2015\Projects\CometX\CometX.Application\obj\Debug\CometX.Application.pdb
