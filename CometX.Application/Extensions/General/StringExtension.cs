@@ -28,8 +28,10 @@ namespace CometX.Application.Extensions.General
 
         public static string ConvertYearDayMonthToMonthDayYear(this string date)
         {
-            DateTime d = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            return d.ToString("MM/dd/yyyy");
+            DateTime d;
+            var pass = DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out d);
+            //DateTime d = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return pass ? d.ToString("MM/dd/yyyy") : date;
         }
 
         public static string ParseToSQLSyntax(this string genericString)

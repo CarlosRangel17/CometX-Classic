@@ -15,12 +15,18 @@ namespace CometX.Application.Extensions.General
 
             var propertyVal = property.GetValue(entity);
 
-            if (propertyVal != null && (property.IsDateTimeType() || property.IsStringType())) propertyVal = "'" + propertyVal + "'";
-            else if (propertyVal == null && property.IsNullableType()) propertyVal = "NULL";
+            if (propertyVal != null && (property.IsDateTimeType() || property.IsStringType()))
+            {
+                propertyVal = "'" + (property.IsDateTimeType() ? ((DateTime)propertyVal).ToString("yyyy-MM-dd HH:mm:ss") : propertyVal) + "'";
+            }
+            else if (propertyVal == null && (property.IsNullableType() || property.IsByteType())) propertyVal = "NULL";
             else if (property.IsStringType()) propertyVal = "''";
             else if (property.IsEnumType()) propertyVal = (int)propertyVal;
             else if (property.IsBoolType()) propertyVal = (bool)propertyVal ? '1' : '0';
-
+            else if (property.IsByteType())
+            {
+                propertyVal = "0x" + BitConverter.ToString((byte[])propertyVal).Replace("-", "");
+            }
             return Convert.ToString(propertyVal);
         }
 
@@ -31,17 +37,22 @@ namespace CometX.Application.Extensions.General
 
         public static bool IsBoolType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("boolean") || property.PropertyType.Name.ToLower().Equals("bool");
+            return property.PropertyType == typeof(bool) || property.PropertyType == typeof(Boolean);
         }
 
         public static bool IsDateTimeType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("datetime");
+            return property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(DateTime?);
         }
 
         public static bool IsDoubleType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("double");
+            return property.PropertyType == typeof(double);
+        }
+
+        public static bool IsByteType(this PropertyInfo property)
+        {
+            return property.PropertyType == typeof(byte) || property.PropertyType == typeof(byte[]);
         }
 
         public static bool IsEnumType(this PropertyInfo property)
@@ -51,12 +62,12 @@ namespace CometX.Application.Extensions.General
 
         public static bool IsLongType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("int64");
+            return property.PropertyType == typeof(Int64);
         }
 
         public static bool IsIntType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("int32");
+            return property.PropertyType == typeof(Int32);
         }
 
         public static bool IsNullableType(this PropertyInfo property)
@@ -66,7 +77,7 @@ namespace CometX.Application.Extensions.General
 
         public static bool IsStringType(this PropertyInfo property)
         {
-            return property.PropertyType.Name.ToLower().Equals("string");
+            return property.PropertyType == typeof(string);
         }
 
         public static string ToDefaultWhereCondition<T>(this List<PropertyInfo> properties, T entity, bool includeWhereClause = false) where T : new()

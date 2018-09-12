@@ -15,6 +15,11 @@ namespace CometX.Application.Extensions.General
             return propertyInfo.HasPropertyNotMappedAttribute() || (propertyInfo.HasPrimaryKeyAttribute() && !propertyInfo.HasAllowIdentityUpdateAttribute());
         }
 
+        public static bool HasDbColumnAttribute(this PropertyInfo propertyInfo)
+        {
+            return propertyInfo.GetCustomAttribute<DBColumnAttribute>() != null;
+        }
+
         public static bool HasFlagAttribute(this PropertyInfo propertyInfo)
         {
             return propertyInfo.GetCustomAttribute<FlagAttribute>() != null;
@@ -28,6 +33,17 @@ namespace CometX.Application.Extensions.General
         public static bool HasPropertyNotMappedAttribute(this PropertyInfo propertyInfo)
         {
             return propertyInfo.GetCustomAttribute<PropertyNotMappedAttribute>() != null;
+        }
+
+        public static string GetDbColumnAttributeMapping(this PropertyInfo propertyInfo)
+        {
+            string name = "";
+
+            var columnMapping = propertyInfo.GetCustomAttribute<DBColumnAttribute>();
+
+            if (columnMapping != null) name = (columnMapping as DBColumnAttribute).Name;
+
+            return name;
         }
     }
 }

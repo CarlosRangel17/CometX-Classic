@@ -24,14 +24,14 @@ namespace CometX.Application.Repository
         #region constructor(s)
         public CometXRepository()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["GenericRepository"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             if (ConnectionString.Contains("metadata")) ConnectionString = ConnectionString.ExtrapolateMetaDataFromConnectionString();
             SqlUtil = new SqlUtils(ConnectionString);
         }
 
         public CometXRepository(string key = "")
         {
-            Key = key ?? "GenericRepository";
+            Key = !string.IsNullOrWhiteSpace(key) ? key : "DefaultConnection";
             ConnectionString = ConfigurationManager.ConnectionStrings[Key].ConnectionString;
             if (ConnectionString.Contains("metadata")) ConnectionString = ConnectionString.ExtrapolateMetaDataFromConnectionString();
             SqlUtil = new SqlUtils(ConnectionString);
@@ -39,7 +39,7 @@ namespace CometX.Application.Repository
 
         public CometXRepository(string key = "", string connectionString = "")
         {
-            Key = key ?? "GenericRepository";
+            Key = key ?? "DefaultConnection";
             ConnectionString = connectionString ?? ConfigurationManager.ConnectionStrings[Key].ConnectionString;
             if (ConnectionString.Contains("metadata")) ConnectionString = ConnectionString.ExtrapolateMetaDataFromConnectionString();
             SqlUtil = new SqlUtils(ConnectionString);

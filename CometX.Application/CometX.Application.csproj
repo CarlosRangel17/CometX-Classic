@@ -59,9 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AllowIdentityColumnUpdateAttribute.cs" />
+    <Compile Include="Attributes\DBColumnAttribute.cs" />
     <Compile Include="Attributes\FlagAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Attributes\PropertyNotMappedAttribute.cs" />
+    <Compile Include="Attributes\SQLKeywordAttribute.cs" />
     <Compile Include="Extensions\General\AttributeExtensions.cs" />
     <Compile Include="Extensions\General\DictionaryExtension.cs" />
     <Compile Include="Extensions\General\EnumExtension.cs" />

@@ -112,6 +112,18 @@ namespace CometX.Application.Managers
         }
 
         /// <summary>
+        /// Inserts & Returns object context. Note that this function must only be used for entities with PK column 'Id'  
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public void InsertWithContext<T>(ref T entity) where T : new()
+        {
+            _repo.Insert(entity);
+            entity = _repo.SortedTable<T>(SortDirection.Descending.ToDescription(), "Id").FirstOrDefault();
+        }
+
+        /// <summary>
         /// Finds entity by Id and marks active / inactive the column associated with a Flag attribute.
         /// </summary>
         /// <typeparam name="T"></typeparam>

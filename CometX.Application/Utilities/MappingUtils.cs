@@ -35,20 +35,22 @@ namespace CometX.Application.Utilities
                     {
                         PropertyInfo propertyInfo = baseType.GetProperty(property.Name);
 
-                        if (propertyInfo.GetCustomAttribute<PropertyNotMappedAttribute>() != null) continue;
+                        if (propertyInfo.HasPropertyNotMappedAttribute()) continue;
 
                         //if the property type is nullable, we need to get the underlying type of the property
                         var targetType = propertyInfo.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
                         //Returns an System.Object with the specified System.Type and whose value is equivalent to the specified object.
-                        var propertyVal = reader[property.Name];
+                        var hasDbAttribute = propertyInfo.HasDbColumnAttribute();
+                        var propertyToMap = hasDbAttribute ? propertyInfo.GetDbColumnAttributeMapping() : propertyInfo.Name;
+                        var propertyVal = reader[propertyToMap];
 
                         if (!(propertyVal is DBNull))
                         {
                             propertyVal = propertyInfo.PropertyType.IsEnum ? Enum.ToObject(targetType, propertyVal) : Convert.ChangeType(propertyVal, targetType);
                         }
 
-                        if (propertyVal is DBNull && propertyInfo.IsNullableType())
+                        if (propertyVal is DBNull && (propertyInfo.IsNullableType() || propertyInfo.IsByteType()))
                         {
                             propertyVal = null;
                         }
