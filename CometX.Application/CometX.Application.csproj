@@ -61,6 +61,7 @@
     <Compile Include="Attributes\AllowIdentityColumnUpdateAttribute.cs" />
     <Compile Include="Attributes\DBColumnAttribute.cs" />
     <Compile Include="Attributes\FlagAttribute.cs" />
+    <Compile Include="Attributes\IsActiveAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Attributes\PropertyNotMappedAttribute.cs" />
     <Compile Include="Attributes\SQLKeywordAttribute.cs" />
@@ -89,9 +90,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\BaseQuery.cs" />
     <Compile Include="Repository\CometXRepository.cs" />
+    <Compile Include="Utilities\EvaluatorUtil.cs" />
     <Compile Include="Utilities\QueryEvaluatorUtils.cs" />
     <Compile Include="Utilities\ListUtils.cs" />
     <Compile Include="Utilities\MappingUtils.cs" />
+    <Compile Include="Utilities\QueryTranslatorUtils.cs" />
     <Compile Include="Utilities\QueryUtils.cs" />
     <Compile Include="Utilities\SqlUtils.cs" />
   </ItemGroup>
