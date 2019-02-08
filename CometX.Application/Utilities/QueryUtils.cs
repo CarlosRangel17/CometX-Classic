@@ -360,7 +360,7 @@ namespace CometX.Application.Utilities
                 }
                 //if (target != null) return Expression.Constant(value, m.Type);
 
-                sb.Append(value);
+                sb.Append(string.Format("'{0}'", value));
                 return m;
             }
 
