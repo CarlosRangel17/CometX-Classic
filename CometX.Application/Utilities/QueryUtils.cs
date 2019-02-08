@@ -103,7 +103,8 @@ namespace CometX.Application.Utilities
 
             if (!string.IsNullOrWhiteSpace(sb.ToString()) && string.IsNullOrWhiteSpace(query))
             {
-                query = sb.ToString();
+                var sbQuery = sb.ToString().Replace('"', '\'');
+                query = sbQuery;
             }
 
             return query;

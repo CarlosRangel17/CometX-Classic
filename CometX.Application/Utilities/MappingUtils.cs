@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using CometX.Application.Attributes;
 using CometX.Application.Extensions.General;
+using System.Text.RegularExpressions;
 
 namespace CometX.Application.Utilities
 {
@@ -58,6 +59,11 @@ namespace CometX.Application.Utilities
                         if (propertyVal is DBNull && propertyInfo.IsStringType())
                         {
                             propertyVal = "";
+                        }
+
+                        if (propertyInfo.IsStringType() && !string.IsNullOrWhiteSpace(Convert.ToString(propertyVal)) && Regex.IsMatch(Convert.ToString(propertyVal), @"\s+$"))
+                        {
+                            propertyVal = Convert.ToString(propertyVal).ToString().TrimEnd();
                         }
 
                         //Set the value of the property
