@@ -343,6 +343,27 @@ namespace CometX.Application.Utilities
                 return m;
             }
 
+            if (m.Expression != null && m.Expression.NodeType == ExpressionType.Constant)
+            {
+                object target = ((ConstantExpression)m.Expression).Value, value;
+                switch (m.Member.MemberType)
+                {
+                    case MemberTypes.Property:
+                        value = ((PropertyInfo)m.Member).GetValue(target, null);
+                        break;
+                    case MemberTypes.Field:
+                        value = ((FieldInfo)m.Member).GetValue(target);
+                        break;
+                    default:
+                        value = target = null;
+                        break;
+                }
+                //if (target != null) return Expression.Constant(value, m.Type);
+
+                sb.Append(value);
+                return m;
+            }
+
             throw new NotSupportedException(string.Format("The member '{0}' is not supported", m.Member.Name));
         }
 
