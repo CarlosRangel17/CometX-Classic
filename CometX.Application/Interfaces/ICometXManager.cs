@@ -14,8 +14,12 @@ namespace CometX.Application.Interfaces
         T GetByKey<T>(object key) where T : new();
         List<T> GetSortedTable<T>(SortDirection sortDirection, string sortValue = "", Expression<Func<T, bool>> expression = null) where T : new();
         T FirstOrDefault<T>(Expression<Func<T, bool>> expression = null) where T : new();
+        void Insert<T>(T entity) where T : new();
+        void InsertWithContext<T>(ref T entity) where T : new();
         void MarkActive<T>(int id) where T : new();
         void MarkActiveByKey<T>(object key) where T : new();
         void Save<T>(T entity) where T : new();
+        void Update<T>(T entity) where T : new();
+        void Update<T>(T entity, Expression<Func<T, bool>> expression) where T : new();
     }
 }

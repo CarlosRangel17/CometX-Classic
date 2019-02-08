@@ -262,7 +262,7 @@ namespace CometX.Application.Repository
         /// Updates the specified entity.
         /// </summary>
         /// <param name="entity"></param>
-        public void Update<T>(T entity) where T : new()
+        public void Update<T>(T entity, Expression<Func<T, bool>> expression = null) where T : new()
         {
             string query = "";
 
@@ -270,7 +270,9 @@ namespace CometX.Application.Repository
             {
                 if (entity == null) throw new ArgumentNullException("entity");
 
-                query = BaseQuery.UPDATE_WHERE<T>(entity.ToUpdateQuery());
+                string condition = expression == null ? "" : QueryUtil.Translate(expression);
+
+                query = BaseQuery.UPDATE_WHERE<T>(entity.ToUpdateQuery(condition));
 
                 SqlUtil.ExecuteDynamicQuery(query);
             }

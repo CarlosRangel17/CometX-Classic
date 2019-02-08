@@ -24,6 +24,16 @@ namespace CometX.Application.Managers
 
         #region public methods
         /// <summary>
+        /// Deletes the specified entity.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public void Delete<T>(T entity) where T : new()
+        {
+            _repo.Delete(entity);
+        }
+
+        /// <summary>
         /// Returns a list of all entities associated with class T based off string query.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -78,16 +88,6 @@ namespace CometX.Application.Managers
         public List<T> GetSortedTable<T>(SortDirection sortDirection, string sortValue, Expression<Func<T, bool>> expression = null) where T : new()
         {
             return _repo.SortedTable(sortDirection.ToDescription(), sortValue, expression);
-        }
-
-        /// <summary>
-        /// Deletes the specified entity.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity"></param>
-        public void Delete<T>(T entity) where T : new()
-        {
-            _repo.Delete(entity);
         }
 
         /// <summary>
@@ -194,13 +194,23 @@ namespace CometX.Application.Managers
         }
 
         /// <summary>
-        /// Updates the specified entity.
+        /// Updates the specified entity based off PrimaryKey attribute.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="entity"></param>
         public void Update<T>(T entity) where T : new()
         {
             _repo.Update(entity);
+        }
+
+        /// <summary>
+        /// Updates the specified entity based off provided expression. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public void Update<T>(T entity, Expression<Func<T, bool>> expression) where T : new()
+        {
+            _repo.Update(entity, expression);
         }
         #endregion
 

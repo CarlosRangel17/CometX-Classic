@@ -360,8 +360,16 @@ namespace CometX.Application.Utilities
                         break;
                 }
                 //if (target != null) return Expression.Constant(value, m.Type);
+                var expValue = Expression.Constant(value, m.Type);
+                sb.Append(string.Format("{0}", expValue));
+                return m;
+            }
 
-                sb.Append(string.Format("'{0}'", value));
+            if (m.Expression != null && m.Expression.NodeType == ExpressionType.MemberAccess)
+            {
+                var value = Expression.Lambda(m).Compile().DynamicInvoke();
+                var expValue = Expression.Constant(value, m.Type);
+                sb.Append(string.Format("{0}", expValue));
                 return m;
             }
 
