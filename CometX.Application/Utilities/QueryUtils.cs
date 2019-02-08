@@ -101,6 +101,11 @@ namespace CometX.Application.Utilities
                 query += _orderBy;
             }
 
+            if (!string.IsNullOrWhiteSpace(sb.ToString()) && string.IsNullOrWhiteSpace(query))
+            {
+                query = sb.ToString();
+            }
+
             return query;
         }
 
