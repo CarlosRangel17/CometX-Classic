@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using System.Configuration;
 using System.Linq.Expressions;
 using System.Collections.Generic;
@@ -48,7 +47,7 @@ namespace CometX.Application.Repository
 
         #region public methods
         /// <summary>
-        /// Deletes the specified entity.
+        /// Deletes the specified entity based off Primary Key attribute.
         /// </summary>
         /// <param name="entity"></param>
         public void Delete<T>(T entity) where T : new()
@@ -60,6 +59,41 @@ namespace CometX.Application.Repository
                 if (entity == null) throw new ArgumentNullException("entity");
 
                 query = BaseQuery.DELETE_WHERE<T>(entity.ToDeleteQuery());
+
+                SqlUtil.ExecuteDynamicQuery(query);
+            }
+            catch (Exception ex)
+            {
+                var message = ex.Message;
+
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+
+                    message += "\n" + ex.Message;
+                }
+
+                throw new Exception(message);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified entity or entities based off provided expression.
+        /// </summary>
+        /// <param name="entity"></param>
+        public void Delete<T>(Expression<Func<T, bool>> expression, bool deleteAll = false) 
+        {
+            string query = "";
+
+            try
+            {
+                string table = typeof(T).Name;
+
+                string condition = QueryUtil.Translate(expression);
+
+                query = deleteAll
+                    ? BaseQuery.DELETE_WHERE<T>(new string[] { table, condition })
+                    : BaseQuery.DELETE_FIRST_WHERE<T>(new string[] { table, condition });
 
                 SqlUtil.ExecuteDynamicQuery(query);
             }

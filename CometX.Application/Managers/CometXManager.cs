@@ -34,6 +34,26 @@ namespace CometX.Application.Managers
         }
 
         /// <summary>
+        /// Deletes all specified entities based off provided expression. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public void DeleteAll<T>(Expression<Func<T, bool>> expression)
+        {
+            _repo.Delete(expression, true);
+        }
+
+        /// <summary>
+        /// Deletes the first entity based off provided expression. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public void DeleteFirst<T>(Expression<Func<T, bool>> expression)
+        {
+            _repo.Delete<T>(expression);
+        }
+
+        /// <summary>
         /// Returns a list of all entities associated with class T based off string query.
         /// </summary>
         /// <typeparam name="T"></typeparam>

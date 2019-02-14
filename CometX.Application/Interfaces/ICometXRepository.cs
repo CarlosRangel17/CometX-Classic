@@ -7,6 +7,7 @@ namespace CometX.Application.Interfaces
     public interface ICometXRepository
     {
         void Delete<T>(T entity) where T : new();
+        void Delete<T>(Expression<Func<T, bool>> expression, bool deleteAll = false);
         void Insert<T>(T entity) where T : new();
         T GetById<T>(int id) where T : new();
         T FirstOrDefault<T>(Expression<Func<T, bool>> expression = null) where T : new();
