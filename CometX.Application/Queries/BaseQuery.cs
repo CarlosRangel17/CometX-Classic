@@ -9,6 +9,7 @@ namespace CometX.Application.Queries
         public static string SELECT_FROM_QUERY = "SELECT * FROM [{0}]";
         public static string SELECT_FROM_ORDER_BY_QUERY = "SELECT * FROM [{0}] ORDER BY {1} {2}";
         public static string SELECT_FROM_WHERE_QUERY = "SELECT * FROM [{0}] WHERE {1}";
+        public static string SELECT_FROM_WHERE_EXISTS_QUERY = "SELECT CASE WHEN EXISTS (SELECT * FROM {0} WHERE {1}) THEN 1 ELSE 0 END AS 'Result'";
         public static string SELECT_FROM_WHERE_ORDER_BY_QUERY = "SELECT * FROM [{0}] WHERE {1} ORDER BY {2} {3}";
         public static string DELETE_WHERE_QUERY = "DELETE FROM [{0}] WHERE {1}";
         public static string DELETE_FIRST_WHERE_QUERY = "DELETE TOP (1) FROM [{0}] WHERE {1}";
@@ -56,6 +57,11 @@ namespace CometX.Application.Queries
             if (string.IsNullOrWhiteSpace(condition)) return string.Format(SELECT_FROM_QUERY, typeof(T).Name);
 
             return string.Format(SELECT_FROM_WHERE_QUERY, typeof(T).Name, condition);
+        }
+
+        public static string SELECT_FROM_WHERE_EXISTS<T>(string condition)
+        {
+            return string.Format(SELECT_FROM_WHERE_EXISTS_QUERY, typeof(T).Name, condition);
         }
 
         public static string SELECT_FROM_WHERE_ORDER_BY<T>(string sortDirection, string sortValue, string condition = "")

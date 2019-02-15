@@ -217,6 +217,34 @@ namespace CometX.Application.Repository
             }
         }
 
+        /// <summary>
+        /// Returns a flag based off query condition provided. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public bool CheckTable<T>(Expression<Func<T, bool>> expression)
+        {
+            try
+            {
+                var query = BaseQuery.SELECT_FROM_WHERE_EXISTS<T>(QueryUtil.Translate(expression));
+
+                return SqlUtil.CheckDynamicQuery(query);
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    message += ex.Message;
+                }
+
+                throw new Exception(message);
+            }
+        }
+
         //TODO: Figure out QueryUtil.Translate()
         /// <summary>
         /// Returns a list of sorted entities associated with Class T.

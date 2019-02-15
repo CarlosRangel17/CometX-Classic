@@ -7,6 +7,7 @@ namespace CometX.Application.Interfaces
 {
     public interface ICometXManager
     {
+        bool Any<T>(Expression<Func<T, bool>> expression);
         void Delete<T>(T entity) where T : new();
         void DeleteAll<T>(Expression<Func<T, bool>> expression);
         void DeleteFirst<T>(Expression<Func<T, bool>> expression);

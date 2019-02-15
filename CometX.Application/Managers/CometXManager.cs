@@ -24,6 +24,16 @@ namespace CometX.Application.Managers
 
         #region public methods
         /// <summary>
+        /// Queries the specified domain by expression.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        public bool Any<T>(Expression<Func<T, bool>> expression)
+        {
+            return _repo.CheckTable(expression);
+        }
+
+        /// <summary>
         /// Deletes the specified entity.
         /// </summary>
         /// <typeparam name="T"></typeparam>

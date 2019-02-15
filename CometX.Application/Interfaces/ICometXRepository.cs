@@ -11,6 +11,7 @@ namespace CometX.Application.Interfaces
         void Insert<T>(T entity) where T : new();
         T GetById<T>(int id) where T : new();
         T FirstOrDefault<T>(Expression<Func<T, bool>> expression = null) where T : new();
+        bool CheckTable<T>(Expression<Func<T, bool>> expression);
         List<T> SortedTable<T>(string sortDirection, string sortValue, Expression<Func<T, bool>> expression = null) where T : new();
         List<T> Table<T>(string query = "") where T : new();
         List<T> Table<T>(Expression<Func<T, bool>> expression) where T : new();

@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using Microsoft.ApplicationBlocks.Data;
+using System;
 
 namespace CometX.Application.Utilities
 {
@@ -17,6 +18,23 @@ namespace CometX.Application.Utilities
         public SqlUtils(string connectionString)
         {
             ConnectionString = connectionString;
+        }
+
+        public bool CheckDynamicQuery(string query)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlCommand cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = query;
+                using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
+                {
+                    return Convert.ToBoolean(reader["Result"]);
+                }
+            }
+
+            throw new Exception("Something went wrong! Please contact your System Administrator.");
         }
 
         public bool CheckStoredProc(string storedProc, Dictionary<string, string> parameters = null)
