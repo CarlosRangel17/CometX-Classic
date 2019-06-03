@@ -18,6 +18,16 @@ namespace CometX.Application.Queries
         public static string UPDATE_ALL_QUERY = "UPDATE [{0}] SET {1}";
         public static string UPDATE_WHERE_QUERY = "UPDATE [{0}] SET {1} WHERE {2}";
 
+        public static string APPEND_FETCH(string query, int recordsToTake)
+        {
+            return query + string.Format(" FETCH NEXT {0} ROWS ONLY", recordsToTake);
+        }
+
+        public static string APPEND_SKIP(string query, int recordsToSkip)
+        {
+            return query + string.Format(" OFFSET {0} ROWS", recordsToSkip);
+        }
+
         public static string DELETE_WHERE<T>(object[] parameters)
         {
             return string.Format(DELETE_WHERE_QUERY, parameters);

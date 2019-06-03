@@ -108,7 +108,7 @@ namespace CometX.Application.Managers
         }
 
         /// <summary>
-        /// Returns a list of sorted entities associated with Class T.
+        /// Returns a list of sorted entities associated with Class T based off expression.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="sortDirection"></param>
@@ -117,7 +117,22 @@ namespace CometX.Application.Managers
         /// <returns></returns>
         public List<T> GetSortedTable<T>(SortDirection sortDirection, string sortValue, Expression<Func<T, bool>> expression = null) where T : new()
         {
-            return _repo.SortedTable(sortDirection.ToDescription(), sortValue, expression);
+            return _repo.SortedTable(sortDirection.ToDescription(), sortValue, null, null, expression);
+        }
+
+        /// <summary>
+        /// Returns a list of sorted entities associated with Class T based off expression and/or skip/take parameters.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortValue"></param>
+        /// <param name="recordsToSkip"></param>
+        /// <param name="recordsToTake"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public List<T> GetSortedTable<T>(SortDirection sortDirection, string sortValue, int recordsToSkip, int? recordsToTake = null, Expression<Func<T, bool>> expression = null) where T : new()
+        {
+            return _repo.SortedTable(sortDirection.ToDescription(), sortValue, recordsToSkip, recordsToTake, expression);
         }
 
         /// <summary>

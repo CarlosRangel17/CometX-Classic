@@ -254,7 +254,7 @@ namespace CometX.Application.Repository
         /// <param name="sortValue"></param>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public List<T> SortedTable<T>(string sortDirection, string sortValue, Expression<Func<T, bool>> expression = null) where T : new()
+        public List<T> SortedTable<T>(string sortDirection, string sortValue, int? recordsToSkip = null, int? recordsToTake = null, Expression<Func<T, bool>> expression = null) where T : new()
         {
             try
             {
@@ -262,12 +262,28 @@ namespace CometX.Application.Repository
                 ? BaseQuery.SELECT_FROM_ORDER_BY<T>(sortDirection, sortValue)
                 : BaseQuery.SELECT_FROM_WHERE_ORDER_BY<T>(sortDirection, sortValue, QueryUtil.Translate(expression));
 
+                if (recordsToSkip.HasValue)
+                {
+                    query = BaseQuery.APPEND_SKIP(query, recordsToSkip.Value);
+
+                    if (recordsToTake.HasValue) query = BaseQuery.APPEND_FETCH(query, recordsToTake.Value);
+                }
+
                 return SqlUtil.GetMultipleInfo<T>(query, null, true);
             }
             catch (Exception ex)
             {
+                string message = ex.Message;
+
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    message += ex.Message;
+                }
+
+                throw new Exception(message);
                 // Default to query all records, then apply predicate -- Need to figure out the try section
-                return SqlUtil.GetMultipleInfo<T>(BaseQuery.SELECT_FROM_ORDER_BY<T>(sortDirection, sortValue), null, true).Where(expression.Compile()).ToList();
+                // return SqlUtil.GetMultipleInfo<T>(BaseQuery.SELECT_FROM_ORDER_BY<T>(sortDirection, sortValue), null, true).Where(expression.Compile()).ToList();
             }
         }
 
