@@ -361,7 +361,12 @@ namespace CometX.Application.Utilities
                 }
                 //if (target != null) return Expression.Constant(value, m.Type);
                 var expValue = Expression.Constant(value, m.Type);
-                sb.Append(string.Format("{0}", expValue));
+                var queryExp = "{0}";
+
+                // Check if Type equals DateTime; if so, apply single quotes 
+                if (m.Type == typeof(DateTime)) queryExp = string.Format("'{0}'", queryExp);
+
+                sb.Append(string.Format(queryExp, expValue));
                 return m;
             }
 
