@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CometX.Application", "CometX.Application\CometX.Application.csproj", "{7E0C97F5-E633-4007-B29E-C7E581E3987A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CometX.ConsoleApp", "CometXConsoleApp\CometX.ConsoleApp.csproj", "{8AA8183C-589E-4803-8947-349051CC2BB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CometX.Nethereum", "CometX.Nethereum\CometX.Nethereum.csproj", "{D1264911-B85F-469A-A8B8-127045D8B3F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CometX.DataMigration", "CometX.DataMigration\CometX.DataMigration.csproj", "{073E433D-8BD5-4D60-A407-CBC75B3DDCC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,23 @@ Global
 		{7E0C97F5-E633-4007-B29E-C7E581E3987A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E0C97F5-E633-4007-B29E-C7E581E3987A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E0C97F5-E633-4007-B29E-C7E581E3987A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA8183C-589E-4803-8947-349051CC2BB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA8183C-589E-4803-8947-349051CC2BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA8183C-589E-4803-8947-349051CC2BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA8183C-589E-4803-8947-349051CC2BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1264911-B85F-469A-A8B8-127045D8B3F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1264911-B85F-469A-A8B8-127045D8B3F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1264911-B85F-469A-A8B8-127045D8B3F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1264911-B85F-469A-A8B8-127045D8B3F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073E433D-8BD5-4D60-A407-CBC75B3DDCC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073E433D-8BD5-4D60-A407-CBC75B3DDCC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073E433D-8BD5-4D60-A407-CBC75B3DDCC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073E433D-8BD5-4D60-A407-CBC75B3DDCC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA4C730B-DA36-4D39-A03F-AC3772A09C81}
 	EndGlobalSection
 EndGlobal
