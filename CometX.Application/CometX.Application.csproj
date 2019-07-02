@@ -63,6 +63,7 @@
     <Compile Include="Attributes\FlagAttribute.cs" />
     <Compile Include="Attributes\IsActiveAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
+    <Compile Include="Attributes\ColumnNotMappedAttribute.cs" />
     <Compile Include="Attributes\PropertyNotMappedAttribute.cs" />
     <Compile Include="Attributes\SQLKeywordAttribute.cs" />
     <Compile Include="Extensions\General\AttributeExtensions.cs" />

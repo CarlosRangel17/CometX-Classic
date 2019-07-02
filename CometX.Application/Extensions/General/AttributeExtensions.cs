@@ -15,6 +15,11 @@ namespace CometX.Application.Extensions.General
             return propertyInfo.HasPropertyNotMappedAttribute() || (propertyInfo.HasPrimaryKeyAttribute() && !propertyInfo.HasAllowIdentityUpdateAttribute());
         }
 
+        public static bool HasColumnNotMappedAttribute(this PropertyInfo propertyInfo)
+        {
+            return propertyInfo.GetCustomAttribute<ColumnNotMappedAttribute>() != null;
+        }
+
         public static bool HasDbColumnAttribute(this PropertyInfo propertyInfo)
         {
             return propertyInfo.GetCustomAttribute<DBColumnAttribute>() != null;

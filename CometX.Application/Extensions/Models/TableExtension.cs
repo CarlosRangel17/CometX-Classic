@@ -15,9 +15,9 @@ namespace CometX.Application.Extensions.Models
             if (table.ValuesList == null) table.ValuesList = new List<ColumnValue>();
 
             Type recordType = typeof(T);
-            List<PropertyInfo> properties = typeof(T).GetProperties().ToList();
+            List<PropertyInfo> properties = typeof(T).GetProperties().Where(x => !x.HasColumnNotMappedAttribute()).ToList();
 
-            properties.ForEach(x => table.Columns.Add(new Column
+            properties.ToList().ForEach(x => table.Columns.Add(new Column
             {
                 Name = x.Name,
                 Type = x.PropertyType.ToString()

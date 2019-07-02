@@ -165,7 +165,7 @@ namespace CometX.Application.Managers
         public void InsertWithContext<T>(ref T entity) where T : new()
         {
             _repo.Insert(entity);
-            entity = _repo.SortedTable<T>(SortDirection.Descending.ToDescription(), "Id").FirstOrDefault();
+            entity = _repo.SortedTable<T>(SortDirection.Descending.ToDescription(), "Id", 0, 1).FirstOrDefault();
         }
 
         /// <summary>

@@ -3,11 +3,9 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
-using CometX.Application.Attributes;
-using CometX.Application.Extensions.General;
-using System.Text.RegularExpressions;
+using InternalDataMigration.DataMigration.Attributes;
 
-namespace CometX.Application.Utilities
+namespace InternalDataMigration.DataMigration.Utilities
 {
     public class MappingUtils
     {
@@ -53,40 +51,37 @@ namespace CometX.Application.Utilities
             while (reader.Read())
             {
                 T entry = new T();
+
                 foreach (var property in properties)
                 {
                     try
                     {
                         PropertyInfo propertyInfo = baseType.GetProperty(property.Name);
 
-                        if (propertyInfo.HasPropertyNotMappedAttribute()) continue;
+                        if (propertyInfo.GetCustomAttribute<PropertyNotMappedAttribute>() != null) continue;
+
+                        //find the property type
+                        Type propertyType = propertyInfo.PropertyType;
 
                         //if the property type is nullable, we need to get the underlying type of the property
-                        var targetType = propertyInfo.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
+                        var targetType = IsNullableType(propertyInfo.PropertyType) ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
                         //Returns an System.Object with the specified System.Type and whose value is equivalent to the specified object.
-                        var hasDbAttribute = propertyInfo.HasDbColumnAttribute();
-                        var propertyToMap = hasDbAttribute ? propertyInfo.GetDbColumnAttributeMapping() : propertyInfo.Name;
-                        var propertyVal = reader[propertyToMap];
+                        var propertyVal = reader[property.Name];
 
                         if (!(propertyVal is DBNull))
                         {
                             propertyVal = propertyInfo.PropertyType.IsEnum ? Enum.ToObject(targetType, propertyVal) : Convert.ChangeType(propertyVal, targetType);
                         }
 
-                        if (propertyVal is DBNull && (propertyInfo.IsNullableType() || propertyInfo.IsByteType()))
+                        if ((propertyVal is DBNull && IsNullableType(propertyInfo.PropertyType)))
                         {
                             propertyVal = null;
                         }
 
-                        if (propertyVal is DBNull && propertyInfo.IsStringType())
+                        if ((propertyVal is DBNull && IsStringType(propertyInfo.PropertyType)))
                         {
                             propertyVal = "";
-                        }
-
-                        if (propertyInfo.IsStringType() && !string.IsNullOrWhiteSpace(Convert.ToString(propertyVal)) && Regex.IsMatch(Convert.ToString(propertyVal), @"\s+$"))
-                        {
-                            propertyVal = Convert.ToString(propertyVal).ToString().TrimEnd();
                         }
 
                         //Set the value of the property
@@ -105,10 +100,21 @@ namespace CometX.Application.Utilities
                         throw new Exception(message);
                     }
                 }
+
                 result.Add(entry);
             }
 
             return result;
+        }
+
+        private static bool IsNullableType(Type propertyType)
+        {
+            return propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        private static bool IsStringType(Type propertyType)
+        {
+            return propertyType.Name.ToLower().Equals("string");
         }
     }
 }
